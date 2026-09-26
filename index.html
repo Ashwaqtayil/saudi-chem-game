@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇸🇦 عزنا بطبعنا | كيميائية اليوم الوطني</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo',sans-serif}
+body{background:#0a3d1f;background-image:radial-gradient(ellipse at top,rgba(255,215,0,.15) 0,transparent 50%),radial-gradient(ellipse at bottom,rgba(0,108,53,.4) 0,transparent 50%),linear-gradient(135deg,#0a3d1f,#006C35 50%,#0a3d1f);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px;color:#fff}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle at 20% 30%,rgba(255,215,0,.08),transparent 25%),radial-gradient(circle at 80% 70%,rgba(255,215,0,.06),transparent 25%);pointer-events:none;z-index:0}
+.container{background:linear-gradient(160deg,#fff,#f8fdf9 60%,#f0f8f3);color:#0a3d1f;border-radius:30px;max-width:720px;width:100%;box-shadow:0 25px 70px rgba(0,0,0,.5),0 0 0 3px rgba(255,215,0,.4),0 0 60px rgba(255,215,0,.2);text-align:center;position:relative;overflow:hidden;z-index:1}
+.container::before{content:'';position:absolute;top:0;left:0;right:0;height:8px;background:linear-gradient(90deg,#006C35,#ffd700,#b8860b,#ffd700,#006C35);background-size:300% 100%;animation:shimmer 4s linear infinite;z-index:10}
+@keyframes shimmer{0%{background-position:0 0}100%{background-position:300% 0}}
+.national-header{background:linear-gradient(135deg,#006C35,#0a8a4a 50%,#006C35);padding:22px 20px 26px;position:relative;overflow:hidden;border-bottom:4px solid #ffd700}
+.national-header::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 15px,rgba(255,215,0,.08) 15px,rgba(255,215,0,.08) 20px),repeating-linear-gradient(-45deg,transparent,transparent 15px,rgba(255,255,255,.05) 15px,rgba(255,255,255,.05) 20px);pointer-events:none}
+.saudi-emblem{width:80px;height:80px;margin:0 auto 8px;display:block;filter:drop-shadow(0 4px 10px rgba(0,0,0,.3));animation:float 3s ease-in-out infinite;position:relative;z-index:1}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.main-slogan{font-size:42px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,.6),0 3px 6px rgba(0,0,0,.4),3px 3px 0 #0a3d1f;letter-spacing:2px;margin:5px 0;position:relative;z-index:1;animation:glow 3s ease-in-out infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 20px rgba(255,215,0,.6),0 3px 6px rgba(0,0,0,.4),3px 3px 0 #0a3d1f}50%{text-shadow:0 0 35px rgba(255,215,0,.9),0 3px 6px rgba(0,0,0,.4),3px 3px 0 #0a3d1f}}
+.subtitle-national{color:#fff;font-size:13px;font-weight:700;margin-top:6px;opacity:.95;position:relative;z-index:1}
+.divider-gold{width:120px;height:3px;background:linear-gradient(90deg,transparent,#ffd700,transparent);margin:10px auto 0;position:relative;z-index:1}
+.content-area{padding:22px 20px 26px}
+input[type=text],select{width:100%;padding:13px 15px;border:2px solid #006C35;border-radius:14px;font-size:15px;text-align:center;margin-bottom:12px;background:#fff;color:#0a3d1f;font-weight:700;transition:.3s}
+input[type=text]:focus,select:focus{outline:none;border-color:#ffd700;box-shadow:0 0 0 4px rgba(255,215,0,.2)}
+button{background:linear-gradient(135deg,#006C35,#0a8a4a);color:#fff;border:none;padding:14px 22px;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;width:100%;transition:.3s;margin-bottom:9px;position:relative;overflow:hidden;box-shadow:0 5px 15px rgba(0,108,53,.3)}
+button:hover:not(:disabled){transform:translateY(-3px) scale(1.02);box-shadow:0 8px 25px rgba(0,108,53,.4)}
+button:disabled{background:#aaa;cursor:not-allowed}
+.btn-gold{background:linear-gradient(135deg,#ffd700,#b8860b)!important;color:#0a3d1f!important}
+.btn-red{background:linear-gradient(135deg,#d32f2f,#b71c1c)!important}
+.btn-blue{background:linear-gradient(135deg,#1a5490,#2a74b0)!important}
+.level-info{background:linear-gradient(135deg,#f0f8f3,#e8f5e9);padding:13px;border-radius:14px;font-size:13px;margin-bottom:12px;text-align:right;line-height:1.7;border-right:4px solid #ffd700}
+.level-info b{color:#006C35}
+.vision-progress{background:linear-gradient(135deg,#f0f8f3,#e8f5e9);padding:11px 13px;border-radius:14px;margin-bottom:12px;font-size:13px;text-align:right;border-right:4px solid #ffd700}
+.vision-progress b{color:#006C35;font-weight:900}
+.vision-bar{height:10px;background:#ddd;border-radius:5px;margin-top:6px;overflow:hidden}
+.vision-fill{height:100%;background:linear-gradient(90deg,#006C35,#ffd700);width:0;transition:width .5s;border-radius:5px}
+.stats{display:flex;justify-content:space-between;background:linear-gradient(135deg,#0a3d1f,#006C35);color:#fff;padding:11px 14px;border-radius:14px;margin-bottom:12px;font-weight:900;font-size:13px;flex-wrap:wrap;gap:5px;border:1px solid rgba(255,215,0,.3)}
+.streak{color:#ffd700;font-weight:900}
+.powerups{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.powerup{background:linear-gradient(135deg,#f0f8f3,#e8f5e9);border:2px solid #006C35;border-radius:12px;padding:10px 5px;cursor:pointer;transition:.2s;font-size:11px;font-weight:900;color:#0a3d1f;text-align:center}
+.powerup:hover:not(.disabled){background:linear-gradient(135deg,#ffd700,#ffed4e);transform:translateY(-3px)}
+.powerup.disabled{opacity:.4;cursor:not-allowed;background:#eee}
+.powerup-icon{font-size:20px;display:block;margin-bottom:3px}
+.question{font-size:17px;font-weight:900;margin:14px 0;min-height:50px;line-height:1.5;color:#0a3d1f}
+.answers{display:grid;gap:9px}
+.answer-btn{background:#fff;color:#0a3d1f;border:2.5px solid #006C35;padding:13px;border-radius:14px;font-size:15px;cursor:pointer;transition:.25s;font-weight:700}
+.answer-btn:hover:not(:disabled){background:linear-gradient(135deg,#f0f8f3,#e6f4ec);transform:translateX(-5px);border-color:#ffd700}
+.answer-btn.correct{background:linear-gradient(135deg,#006C35,#0a8a4a)!important;color:#fff!important;border-color:#ffd700!important}
+.answer-btn.wrong{background:linear-gradient(135deg,#d32f2f,#b71c1c)!important;color:#fff!important;border-color:#8b0000!important}
+.answer-btn.removed{opacity:.3;text-decoration:line-through;pointer-events:none}
+.timer-bar{height:12px;background:#e0e0e0;border-radius:6px;overflow:hidden;margin-bottom:12px}
+.timer-fill{height:100%;background:linear-gradient(90deg,#006C35,#ffd700);transition:width 1s linear;width:100%;border-radius:6px}
+.timer-fill.warning{background:linear-gradient(90deg,#ff6b00,#d32f2f);animation:blink .5s infinite}
+.timer-fill.frozen{background:linear-gradient(90deg,#4a90d9,#7ec8f5)!important}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.6}}
+.category{display:inline-block;background:linear-gradient(135deg,#ffd700,#b8860b);color:#0a3d1f;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:900;margin-bottom:9px}
+.project-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#ffd700,#b8860b);color:#0a3d1f;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:900;margin-bottom:10px;border:2px solid rgba(255,255,255,.5)}
+.element-card{display:flex;justify-content:center;margin:10px auto}
+.element-svg{width:100px;height:100px;filter:drop-shadow(0 8px 20px rgba(0,108,53,.4));animation:float 3s ease-in-out infinite}
+.fact-box{background:linear-gradient(135deg,#0a3d1f,#006C35 50%,#0a3d1f);color:#fff;padding:16px;border-radius:16px;margin:13px 0;text-align:right;font-size:14px;line-height:1.7;border:3px solid #ffd700;animation:slideIn .5s;position:relative}
+.fact-box::before{content:'🇸🇦';position:absolute;top:12px;left:14px;font-size:24px;opacity:.6}
+.fact-box b{color:#ffd700;display:block;margin-bottom:6px;font-size:13px;padding-right:30px}
+@keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.map-container{background:linear-gradient(135deg,#e8f5e9,#f0f8f3);border-radius:16px;padding:10px;margin:12px 0;border:2.5px solid #006C35}
+.map-title{font-size:12px;color:#006C35;font-weight:900;margin-bottom:6px;text-align:right;padding-right:8px}
+.saudi-map{width:100%;height:200px;display:block}
+/* 🌍 شريط المناطق الـ 13 */
+.regions-bar{display:grid;grid-template-columns:repeat(13,1fr);gap:3px;margin-top:8px;padding:6px;background:rgba(255,255,255,.5);border-radius:10px}
+.region-chip{font-size:8px;font-weight:900;padding:4px 2px;border-radius:6px;background:#e0e0e0;color:#666;text-align:center;transition:.3s;cursor:default;line-height:1.1}
+.region-chip.visited{background:linear-gradient(135deg,#ffd700,#b8860b);color:#0a3d1f;box-shadow:0 2px 6px rgba(255,215,0,.5);transform:scale(1.05)}
+.region-chip.active{background:linear-gradient(135deg,#d32f2f,#b71c1c);color:#fff;animation:pulse 1s infinite}
+/* 🎖️ الشارات */
+.badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.badge-card{background:linear-gradient(135deg,#f0f8f3,#e8f5e9);border:2.5px solid #ddd;border-radius:14px;padding:10px 4px;text-align:center;transition:.3s}
+.badge-card.earned{border-color:#ffd700;background:linear-gradient(135deg,#fff5b8,#ffd700)}
+.badge-card.locked{opacity:.5;filter:grayscale(1)}
+.badge-icon{font-size:26px;display:block;margin-bottom:4px}
+.badge-name{font-size:9px;font-weight:900;color:#0a3d1f;line-height:1.2}
+.badge-desc{font-size:8px;color:#666;margin-top:2px}
+/* 📜 الشهادة */
+.cert-preview{position:fixed;inset:0;background:rgba(10,61,31,.95);display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px;overflow-y:auto}
+.cert-wrapper{background:#fff;border-radius:20px;padding:20px;max-width:700px;width:100%;text-align:center}
+#certificate{background:linear-gradient(135deg,#fff,#f0f8f3);border:10px double #006C35;border-radius:18px;padding:28px 22px;position:relative;overflow:hidden;direction:rtl}
+#certificate::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 10% 10%,rgba(0,108,53,.06),transparent 40%),radial-gradient(circle at 90% 90%,rgba(255,215,0,.1),transparent 40%);pointer-events:none}
+.cert-header-flag{font-size:50px;margin-bottom:6px}
+.cert-title{color:#006C35;font-size:26px;font-weight:900;margin-bottom:5px}
+.cert-subtitle{color:#b8860b;font-size:14px;font-weight:900;margin-bottom:18px}
+.cert-body{color:#333;font-size:14px;line-height:1.9;margin:16px 0;font-weight:600}
+.cert-name{color:#006C35;font-size:32px;font-weight:900;margin:14px 0;padding:10px 20px;border-bottom:3px dashed #ffd700;border-top:3px dashed #ffd700;display:inline-block;min-width:60%}
+.cert-rank{color:#d32f2f;font-size:20px;font-weight:900;margin:13px 0;background:linear-gradient(90deg,#fff5b8,#ffd700,#fff5b8);border-radius:30px;display:inline-block;padding:10px 28px}
+.cert-score{color:#006C35;font-size:18px;font-weight:900;margin:12px 0}
+.cert-medal{font-size:60px;margin:10px 0}
+.cert-footer{display:flex;justify-content:space-around;align-items:flex-end;margin-top:26px;padding:0 10px;flex-wrap:wrap;gap:12px}
+.cert-signature{text-align:center;font-size:12px;color:#333;font-weight:900}
+.cert-signature .line{border-top:2.5px solid #006C35;width:130px;margin-bottom:5px}
+.cert-stamp{font-size:11px;color:#006C35;font-weight:900;border:3px double #006C35;border-radius:50%;width:80px;height:80px;display:flex;align-items:center;justify-content:center;text-align:center;transform:rotate(-15deg);background:rgba(255,215,0,.18);line-height:1.3}
+.cert-date{color:#777;font-size:12px;margin-top:10px;font-weight:700}
+.cert-buttons{margin-top:15px;display:flex;gap:8px;flex-wrap:wrap}
+.cert-buttons button{flex:1;min-width:120px;font-size:14px;padding:12px}
+.leaderboard{text-align:right;margin-top:13px}
+.player-row{display:flex;justify-content:space-between;padding:11px 13px;background:linear-gradient(135deg,#f0f8f3,#e8f5e9);border-radius:12px;margin-bottom:7px;font-weight:900;font-size:13px;color:#0a3d1f;border-right:4px solid #006C35}
+.rank-1{background:linear-gradient(90deg,#ffd700,#fff5b8,#ffd700)!important;border-right-color:#b8860b}
+.rank-2{background:linear-gradient(90deg,#e8e8e8,#f5f5f5,#e8e8e8)!important;border-right-color:#999}
+.rank-3{background:linear-gradient(90deg,#cd7f32,#f0c896,#cd7f32)!important;border-right-color:#8b4513}
+.result{font-size:20px;font-weight:900;margin:13px 0;color:#0a3d1f}
+.hidden{display:none!important}
+.progress{font-size:12px;color:#666;margin-bottom:9px;font-weight:700}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+.bubble{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,215,0,.9),rgba(0,108,53,.4));animation:rise 4s linear forwards;box-shadow:0 0 15px rgba(255,215,0,.5)}
+@keyframes rise{0%{transform:translateY(0) scale(.5);opacity:1}100%{transform:translateY(-100vh) scale(1.2);opacity:0}}
+.conn-badge{position:absolute;top:16px;left:16px;font-size:10px;padding:4px 10px;border-radius:15px;font-weight:900;background:rgba(255,255,255,.9);color:#666;z-index:20}
+.loading{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:5px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.review-item{background:#fff;border:2px solid #d32f2f;border-radius:12px;padding:13px;margin-bottom:10px;text-align:right}
+.review-item .rq{font-weight:900;color:#0a3d1f;margin-bottom:6px;font-size:14px}
+.review-item .ra{font-size:13px;color:#d32f2f;margin-bottom:4px}
+.review-item .rc{font-size:13px;color:#006C35;font-weight:900}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:10001;padding:20px;overflow-y:auto}
+.modal-content{background:#fff;border-radius:20px;padding:25px;max-width:500px;width:100%;text-align:center;color:#0a3d1f;max-height:90vh;overflow-y:auto}
+.modal-content h2{color:#006C35;margin-bottom:15px;font-size:22px}
+.stat-row{display:flex;justify-content:space-between;padding:10px;background:#f0f8f3;border-radius:10px;margin-bottom:6px;font-weight:700;font-size:13px}
+.chart-bar{height:20px;background:linear-gradient(90deg,#006C35,#ffd700);border-radius:10px;margin-bottom:4px;min-width:20px}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#b8860b);color:#0a3d1f;padding:12px 24px;border-radius:30px;font-weight:900;z-index:10002;box-shadow:0 8px 25px rgba(255,215,0,.5);animation:toastIn .4s;font-size:14px}
+@keyframes toastIn{from{transform:translate(-50%,-30px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+@media (max-width:480px){.main-slogan{font-size:32px}.saudi-emblem{width:65px;height:65px}.question{font-size:15px}.saudi-map{height:160px}.badges-grid{grid-template-columns:repeat(3,1fr)}.regions-bar{grid-template-columns:repeat(7,1fr)}}
+</style>
+</head>
+<body>
+<div class="bubbles" id="bubbles"></div>
+
+<div class="container">
+  <span class="conn-badge" id="connBadge">⚪ محلي</span>
+  
+  <div class="national-header">
+    <div class="saudi-emblem">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 75 L 75 30 L 78 33 L 23 78 Z" fill="#ffd700" stroke="#b8860b"/>
+        <path d="M 80 75 L 25 30 L 22 33 L 77 78 Z" fill="#ffd700" stroke="#b8860b"/>
+        <rect x="14" y="72" width="8" height="8" fill="#b8860b" transform="rotate(-45 18 76)"/>
+        <rect x="78" y="72" width="8" height="8" fill="#b8860b" transform="rotate(45 82 76)"/>
+        <rect x="48" y="30" width="4" height="35" fill="#006C35"/>
+        <ellipse cx="50" cy="30" rx="18" ry="6" fill="#006C35"/>
+        <ellipse cx="50" cy="25" rx="14" ry="5" fill="#006C35"/>
+        <ellipse cx="50" cy="20" rx="10" ry="4" fill="#006C35"/>
+        <circle cx="44" cy="33" r="3" fill="#8b4513"/>
+        <circle cx="56" cy="33" r="3" fill="#8b4513"/>
+      </svg>
+    </div>
+    <div class="main-slogan">عزنا بطبعنا</div>
+    <div class="subtitle-national">اليوم الوطني للمملكة العربية السعودية</div>
+    <div class="divider-gold"></div>
+  </div>
+
+  <div class="content-area">
+    <!-- START -->
+    <div id="startScreen">
+      <input type="text" id="playerName" placeholder="✍️ اكتبي اسمك هنا..." maxlength="20">
+      <select id="levelSelect">
+        <option value="all">🇸🇦 جميع المشاريع الوطنية</option>
+        <option value="neom">🏙️ نيوم | الطاقة النظيفة</option>
+        <option value="oil">🛢️ أرامكو | البتروكيماويات</option>
+        <option value="mining">⛏️ التعدين | المعادن</option>
+        <option value="water">💧 التحلية | المياه</option>
+        <option value="space">🚀 الفضاء | الأقمار الصناعية</option>
+        <option value="green">🌱 السعودية الخضراء</option>
+      </select>
+      <div class="level-info">
+        💡 <b>كل سؤال مربوط بمشروع وطني</b><br>
+        ⚡ استخدمي القوى عند سلسلة 3 إجابات<br>
+        🎖️ اجمعي 7 شارات + 13 منطقة<br>
+        📜 شهادة PDF تلقائية في النهاية!
+      </div>
+      <button onclick="startGame()">🚀 ابدئي الرحلة الوطنية</button>
+      <button class="btn-gold" onclick="showLeaderboard()">🏆 لوحة شرف الوطن</button>
+      <button class="btn-blue" onclick="showBadges()">🎖️ شاراتي</button>
+      <button class="btn-red" onclick="showTeacherLogin()" style="font-size:13px;padding:10px;">👩‍🏫 دخول المعلمة</button>
+    </div>
+
+    <!-- GAME -->
+    <div id="gameScreen" class="hidden">
+      <div class="stats">
+        <span>👤 <span id="currentPlayer"></span></span>
+        <span>⭐ <span id="score">0</span></span>
+        <span class="streak" id="streakDisplay"></span>
+      </div>
+      <div class="vision-progress">
+        🇸🇦 <b>تقدمك في رؤية 2030:</b> <span id="visionText">0%</span>
+        <div class="vision-bar"><div class="vision-fill" id="visionFill"></div></div>
+      </div>
+      <div class="powerups">
+        <div class="powerup disabled" id="pu5050" onclick="use5050()"><span class="powerup-icon">✂️</span>50:50</div>
+        <div class="powerup disabled" id="puTime" onclick="useTime()"><span class="powerup-icon">⏰</span>+10 ثواني</div>
+        <div class="powerup disabled" id="puHint" onclick="useHint()"><span class="powerup-icon">💡</span>تلميح</div>
+        <div class="powerup disabled" id="puFreeze" onclick="useFreeze()"><span class="powerup-icon">❄️</span>تجميد</div>
+      </div>
+      <div class="progress">السؤال <span id="qNum">1</span> / <span id="qTotal">10</span></div>
+      <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+      <div class="category" id="categoryTag">كيمياء</div>
+      <div class="project-badge" id="projectBadge">🏗️ مشروع</div>
+      <div class="question" id="questionText"></div>
+      <div id="elementCard" class="element-card hidden"></div>
+      
+      <div class="map-container">
+        <div class="map-title">🗺️ خريطة المملكة - 13 منطقة | <span id="visitedCount">0/13</span></div>
+        <svg class="saudi-map" viewBox="0 0 260 218" id="saudiMap" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="mapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#c8e6c9"/>
+              <stop offset="100%" style="stop-color:#a5d6a7"/>
+            </linearGradient>
+          </defs>
+          <rect width="260" height="218" fill="#e8f5e9" rx="10"/>
+          <polygon points="250.62,128.396 218.465,126.096 186.381,89.436 183.314,74.268 175.622,69.836 164.337,52.104 140.28,45.323 119.649,43.718 69.834,5.548 55.937,2.385 29.891,9.31 40.937,23.591 16.401,39.788 2,42.808 5.547,54.501 28.885,104.196 43.884,120.202 48.892,132.278 48.221,149.003 66.048,167.788 96,215.615 101.798,202.101 154.872,207.276 164.169,192.852 176.533,186.334 213.193,179.961 251.291,164.41 258,136.711" 
+                   fill="url(#mapGrad)" stroke="#006C35" stroke-width="1.8" stroke-linejoin="round"/>
+          <text x="12" y="115" font-size="7" fill="#1a5490" font-weight="bold" opacity=".55" transform="rotate(-78 12 115)">البحر الأحمر</text>
+          <text x="248" y="100" font-size="7" fill="#1a5490" font-weight="bold" opacity=".55" transform="rotate(78 248 100)">الخليج العربي</text>
+          <g id="mapMarkers"></g>
+        </svg>
+        <!-- شريط المناطق الـ 13 -->
+        <div class="regions-bar" id="regionsBar"></div>
+      </div>
+
+      <div class="answers" id="answersBox"></div>
+      <div id="factBox" class="fact-box hidden"></div>
+    </div>
+
+    <!-- END -->
+    <div id="endScreen" class="hidden">
+      <div style="font-size:50px;">🎉🇸🇦</div>
+      <h2 style="color:#006C35;margin:10px 0;">أحسنتِ يا <span id="finalName"></span>!</h2>
+      <div class="result">نتيجتك: <span id="finalScore"></span> نقطة</div>
+      <div id="rankMsg" class="result"></div>
+      <div style="background:linear-gradient(135deg,#f0f8f3,#e8f5e9);padding:12px;border-radius:12px;margin:12px 0;font-size:13px;border-right:4px solid #ffd700;text-align:right;">
+        🏅 <b>ترتيبك:</b> <span id="finalRank">-</span><br>
+        🏆 <b>من إجمالي:</b> <span id="totalPlayers">-</span> متسابقة<br>
+        🗺️ <b>المناطق المزارة:</b> <span id="regionsVisited">0/13</span><br>
+        ⚡ <b>القوى المستخدمة:</b> <span id="powersUsed">0</span>
+      </div>
+      <div style="margin:15px 0;text-align:right;">
+        <h3 style="color:#006C35;font-size:15px;margin-bottom:8px;">🎖️ الشارات المكتسبة:</h3>
+        <div class="badges-grid" id="earnedBadgesGrid"></div>
+      </div>
+      <button class="btn-gold" onclick="showCertificate()">📜 شهادتي</button>
+      <button class="btn-blue" onclick="showReview()">📖 مراجعة الأخطاء</button>
+      <button onclick="shareAchievement()">📤 شاركي إنجازك</button>
+      <button onclick="showLeaderboard()">🏆 لوحة الشرف</button>
+      <button onclick="location.reload()" class="btn-red">🔄 جولة جديدة</button>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div id="leaderboardScreen" class="hidden">
+      <h2 style="color:#006C35;">🏆 لوحة شرف الكيميائيات</h2>
+      <p style="font-size:12px;color:#777;margin-bottom:10px;" id="lbStatus"></p>
+      <div class="leaderboard" id="leaderboardList"></div>
+      <button onclick="location.reload()" style="margin-top:12px;">🔙 رجوع</button>
+    </div>
+
+    <!-- BADGES -->
+    <div id="badgesScreen" class="hidden">
+      <h2 style="color:#006C35;">🎖️ شارات الإنجاز</h2>
+      <p style="font-size:12px;color:#777;margin-bottom:12px;">اجمعي كل الشارات لتصبحي سفيرة الوطن!</p>
+      <div class="badges-grid" id="badgesGrid"></div>
+      <button onclick="location.reload()" style="margin-top:12px;">🔙 رجوع</button>
+    </div>
+
+    <!-- REVIEW -->
+    <div id="reviewScreen" class="hidden">
+      <h2 style="color:#006C35;">📖 مراجعة الأخطاء</h2>
+      <div id="reviewList" style="text-align:right;"></div>
+      <button onclick="location.reload()" style="margin-top:12px;">🔙 رجوع</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// 🔊 AUDIO
+// ═══════════════════════════════════════════════════════════
+let audioCtx=null;
+function initAudio(){if(!audioCtx){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}}
+function playCorrect(){initAudio();if(!audioCtx)return;[523.25,659.25,783.99].forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(audioCtx.destination);const t=audioCtx.currentTime+i*.08;g.gain.setValueAtTime(.15,t);g.gain.exponentialRampToValueAtTime(.001,t+.2);o.start(t);o.stop(t+.2);});}
+function playWrong(){initAudio();if(!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sawtooth';o.frequency.setValueAtTime(300,audioCtx.currentTime);o.frequency.exponentialRampToValueAtTime(100,audioCtx.currentTime+.3);o.connect(g);g.connect(audioCtx.destination);g.gain.setValueAtTime(.15,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.3);o.start();o.stop(audioCtx.currentTime+.3);}
+function playExplosion(){initAudio();if(!audioCtx)return;const bs=audioCtx.sampleRate*.4,b=audioCtx.createBuffer(1,bs,audioCtx.sampleRate),d=b.getChannelData(0);for(let i=0;i<bs;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/bs,2);const s=audioCtx.createBufferSource();s.buffer=b;const f=audioCtx.createBiquadFilter();f.type='lowpass';f.frequency.value=800;const g=audioCtx.createGain();g.gain.value=.25;s.connect(f);f.connect(g);g.connect(audioCtx.destination);s.start();}
+function playTick(){initAudio();if(!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='square';o.frequency.value=1000;o.connect(g);g.connect(audioCtx.destination);g.gain.setValueAtTime(.04,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.05);o.start();o.stop(audioCtx.currentTime+.05);}
+
+// ═══════════════════════════════════════════════════════════
+// 🎨 ELEMENTS
+// ═══════════════════════════════════════════════════════════
+function getElementSVG(s,n,num,c){c=c||"#006C35";const fs=s.length>2?22:32;return '<svg class="element-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g-'+s+'" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:'+c+';stop-opacity:.9"/><stop offset="100%" style="stop-color:#003d1e"/></linearGradient></defs><rect x="10" y="10" width="180" height="180" rx="20" fill="url(#g-'+s+')" stroke="#ffd700" stroke-width="3"/><text x="30" y="45" font-family="Arial" font-size="18" fill="#ffd700" font-weight="bold">'+num+'</text><text x="100" y="115" font-family="Arial" font-size="'+fs+'" fill="#fff" font-weight="bold" text-anchor="middle">'+s+'</text><text x="100" y="160" font-family="Tahoma" font-size="14" fill="#ffd700" text-anchor="middle">'+n+'</text></svg>';}
+const elementImages={H:function(){return getElementSVG("H","هيدروجين",1,"#4a90d9")},O:function(){return getElementSVG("O","أكسجين",8,"#d94a4a")},Na:function(){return getElementSVG("Na","صوديوم",11,"#e8a838")},Au:function(){return getElementSVG("Au","ذهب",79,"#ffd700")},C:function(){return getElementSVG("C","كربون",6,"#333")},Ca:function(){return getElementSVG("Ca","كالسيوم",20,"#a0a0a0")},Al:function(){return getElementSVG("Al","ألمنيوم",13,"#a8a8a8")},Si:function(){return getElementSVG("Si","سيليكون",14,"#5a6b8c")},Ti:function(){return getElementSVG("Ti","تيتانيوم",22,"#c0c8d0")},Li:function(){return getElementSVG("Li","ليثيوم",3,"#d0d0d0")},P:function(){return getElementSVG("P","فسفور",15,"#e85a3a")},S:function(){return getElementSVG("S","كبريت",16,"#e8d838")}};
+
+// ═══════════════════════════════════════════════════════════
+// 🗺️ LOCATIONS
+// ═══════════════════════════════════════════════════════════
+const projectLocations={
+  "🏙️ مشروع نيوم":{x:40,y:42,label:"نيوم"},
+  "🏙️ مشروع ذا لاين":{x:45,y:50,label:"ذا لاين"},
+  "🔋 بطاريات نيوم":{x:38,y:38,label:"نيوم"},
+  "💚 الهيدروجين الأخضر":{x:35,y:46,label:"نيوم"},
+  "🛢️ أرامكو السعودية":{x:215,y:75,label:"الظهران"},
+  "🛢️ حقل الغوار":{x:200,y:95,label:"الغوار"},
+  "🛢️ معامل أرامكو":{x:210,y:85,label:"بقيق"},
+  "⛽ وقود 91 و 95":{x:220,y:80,label:"رأس تنورة"},
+  "⛏️ معادن الألمنيوم":{x:225,y:100,label:"رأس الخير"},
+  "💧 تقنية التناضح العكسي":{x:230,y:110,label:"رأس الخير"},
+  "⛏️ منجم مهد الذهب":{x:120,y:115,label:"مهد الذهب"},
+  "⛏️ منجم وعد الشمال":{x:75,y:35,label:"وعد الشمال"},
+  "⛏️ رؤية 2030 للتعدين":{x:160,y:105,label:"الرياض"},
+  "💧 المؤسسة العامة لتحلية المياه":{x:68,y:122,label:"جدة"},
+  "💧 مياه الشرب المحلاة":{x:73,y:128,label:"الشعيبة"},
+  "🚀 الهيئة السعودية للفضاء":{x:162,y:98,label:"الرياض"},
+  "🚀 صواريخ المستقبل":{x:165,y:94,label:"الرياض"},
+  "🚀 صناعة الطيران":{x:157,y:101,label:"الرياض"},
+  "🌱 مبادرة السعودية الخضراء":{x:168,y:108,label:"الرياض"},
+  "🌱 سكاكا للطاقة الشمسية":{x:85,y:42,label:"سكاكا"},
+  "♻️ اقتصاد دائري":{x:152,y:110,label:"الرياض"}
+};
+
+const ALL_REGIONS=["الجوف","الحدود الشمالية","تبوك","حائل","القصيم","الشرقية","المدينة المنورة","مكة المكرمة","الرياض","الباحة","عسير","جازان","نجران"];
+
+function renderMap(activeProject,activeRegion){
+  // 🎯 Marker
+  const markers=document.getElementById("mapMarkers");
+  markers.innerHTML="";
+  const loc=projectLocations[activeProject];
+  if(loc){
+    const g=document.createElementNS("http://www.w3.org/2000/svg","g");
+    const c1=document.createElementNS("http://www.w3.org/2000/svg","circle");
+    c1.setAttribute("cx",loc.x);c1.setAttribute("cy",loc.y);c1.setAttribute("r","8");
+    c1.setAttribute("fill","#d32f2f");c1.setAttribute("opacity","0.6");
+    g.appendChild(c1);
+    const c2=document.createElementNS("http://www.w3.org/2000/svg","circle");
+    c2.setAttribute("cx",loc.x);c2.setAttribute("cy",loc.y);c2.setAttribute("r","5.5");
+    c2.setAttribute("fill","#d32f2f");c2.setAttribute("stroke","#ffd700");c2.setAttribute("stroke-width","2");
+    g.appendChild(c2);
+    const t=document.createElementNS("http://www.w3.org/2000/svg","text");
+    t.setAttribute("x",loc.x);t.setAttribute("y",loc.y-11);
+    t.setAttribute("font-size","8");t.setAttribute("fill","#d32f2f");
+    t.setAttribute("font-weight","bold");t.setAttribute("text-anchor","middle");
+    t.setAttribute("font-family","Tahoma");
+    t.textContent=loc.label;
+    g.appendChild(t);
+    markers.appendChild(g);
+  }
+  // 🏙️ Region chips
+  renderRegionsBar(activeRegion);
+}
+
+function renderRegionsBar(activeRegion){
+  const bar=document.getElementById("regionsBar");
+  if(!bar)return;
+  bar.innerHTML="";
+  const visited=getVisitedRegions();
+  ALL_REGIONS.forEach(function(name){
+    const div=document.createElement("div");
+    div.className="region-chip";
+    if(visited.indexOf(name)>=0)div.classList.add("visited");
+    if(name===activeRegion)div.classList.add("active");
+    div.textContent=name;
+    bar.appendChild(div);
+  });
+  const vc=document.getElementById("visitedCount");
+  if(vc)vc.textContent=visited.length+"/13";
+}
+
+function getVisitedRegions(){try{return JSON.parse(localStorage.getItem("saudiRegions")||"[]");}catch(e){return [];}}
+function addVisitedRegion(r){if(!r)return;try{const v=getVisitedRegions();if(v.indexOf(r)<0){v.push(r);localStorage.setItem("saudiRegions",JSON.stringify(v));}}catch(e){}}
+function getBadges(){try{return JSON.parse(localStorage.getItem("saudiBadges")||"[]");}catch(e){return [];}}
+function saveBadge(id){try{const b=getBadges();if(b.indexOf(id)<0){b.push(id);localStorage.setItem("saudiBadges",JSON.stringify(b));return true;}return false;}catch(e){return false;}}
+function getPlayCount(){try{return parseInt(localStorage.getItem("saudiPlayCount")||"0");}catch(e){return 0;}}
+function incPlayCount(){try{localStorage.setItem("saudiPlayCount",getPlayCount()+1);}catch(e){}}
+
+// ═══════════════════════════════════════════════════════════
+// 🎖️ BADGES
+// ═══════════════════════════════════════════════════════════
+const BADGES=[
+  {id:"falcon",icon:"🚀",name:"سريعة كالصقر",desc:"إجابة في <3 ثواني"},
+  {id:"fire",icon:"🔥",name:"سلسلة نارية",desc:"5 إجابات صحيحة متتالية"},
+  {id:"diamond",icon:"💎",name:"ماسة الكيمياء",desc:"100% في جولة"},
+  {id:"vision",icon:"🌟",name:"سفيرة رؤية 2030",desc:"أكملت 3 فئات مختلفة"},
+  {id:"pride",icon:"🇸🇦",name:"فخر الوطن",desc:"لعبت 3 جولات"},
+  {id:"chemist",icon:"🧪",name:"كيميائية متميزة",desc:"200+ نقطة"},
+  {id:"geo",icon:"🗺️",name:"خبيرة الجغرافيا",desc:"زارت 13 منطقة"}
+];
+
+function renderBadgesGrid(containerId,onlyEarned){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  c.innerHTML="";
+  const earned=getBadges();
+  BADGES.forEach(function(b){
+    const has=earned.indexOf(b.id)>=0;
+    if(onlyEarned&&!has)return;
+    const div=document.createElement("div");
+    div.className="badge-card "+(has?"earned":"locked");
+    div.innerHTML='<span class="badge-icon">'+b.icon+'</span><div class="badge-name">'+b.name+'</div><div class="badge-desc">'+b.desc+'</div>';
+    c.appendChild(div);
+  });
+  if(onlyEarned&&earned.length===0){
+    c.innerHTML="<p style='color:#777;text-align:center;grid-column:1/-1;'>لم تحصلي على شارات بعد، واصلي!</p>";
+  }
+}
+
+function showBadges(){
+  document.getElementById("startScreen").classList.add("hidden");
+  document.getElementById("badgesScreen").classList.remove("hidden");
+  renderBadgesGrid("badgesGrid",false);
+}
+
+// ═══════════════════════════════════════════════════════════
+// 🇸🇦 QUESTIONS
+// ═══════════════════════════════════════════════════════════
+const questions=[
+  {category:"🏙️ نيوم | الطاقة",project:"🏙️ مشروع نيوم",region:"تبوك",level:"neom",q:"مشروع نيوم يعتمد على الطاقة الشمسية. ما العنصر الأساسي في الخلايا الشمسية؟",element:"Si",answers:["السيليكون","الحديد","الذهب","الزئبق"],correct:0,fact:"🏙️ نيوم مشروع بـ500 مليار دولار، سيعتمد 100% على الطاقة المتجددة بحلول 2030!"},
+  {category:"🏙️ نيوم | الهيدروجين",project:"🏙️ مشروع نيوم",region:"تبوك",level:"neom",q:"نيوم تبني أكبر مصنع للهيدروجين الأخضر. ما الرمز الكيميائي للهيدروجين؟",element:"H",answers:["H","He","Hy","Hg"],correct:0,fact:"🏙️ مصنع الهيدروجين الأخضر في نيوم سينتج 650 طن يومياً بحلول 2026!"},
+  {category:"🏙️ ذا لاين",project:"🏙️ مشروع ذا لاين",region:"تبوك",level:"neom",q:"ذا لاين يستخدم الألمنيوم في واجهاته. ما رمزه؟",element:"Al",answers:["Al","Am","Au","Ag"],correct:0,fact:"🏙️ ذا لاين مدينة خطية بطول 170 كم بدون سيارات!"},
+  {category:"🏙️ بطاريات نيوم",project:"🔋 بطاريات نيوم",region:"تبوك",level:"neom",q:"بطاريات الليثيوم المستخدمة لتخزين الطاقة تحتوي على عنصر:",element:"Li",answers:["الليثيوم","الرصاص","الزئبق","الحديد"],correct:0,fact:"🔋 نيوم تستثمر في بطاريات ليثيوم ضخمة!"},
+  {category:"🛢️ أرامكو | النفط",project:"🛢️ أرامكو السعودية",region:"الشرقية",level:"oil",q:"النفط السعودي خليط من مركبات:",element:"C",answers:["الهيدروكربونات","الكربوهيدرات","البروتينات","الأملاح"],correct:0,fact:"🛢️ أرامكو أكبر شركة نفط في العالم!"},
+  {category:"🛢️ حقل الغوار",project:"🛢️ حقل الغوار",region:"الشرقية",level:"oil",q:"أكبر حقل نفطي في العالم يُسمى:",element:null,answers:["الغوار","السفانية","الخفجي","بقيق"],correct:0,fact:"🛢️ حقل الغوار ~70 مليار برميل!"},
+  {category:"🛢️ كبريت النفط",project:"🛢️ معامل أرامكو",region:"الشرقية",level:"oil",q:"يُزال الكبريت من النفط لأنه يسبب:",element:"S",answers:["تلوث الهواء وأمطار حمضية","زيادة القيمة","تحسين اللون","تبريد المحرك"],correct:0,fact:"🌧️ أرامكو تنتج 4 ملايين طن كبريت سنوياً!"},
+  {category:"🛢️ البنزين",project:"⛽ وقود 91 و 95",region:"الشرقية",level:"oil",q:"المركب الأساسي في البنزين:",element:"C",answers:["الأوكتان C₈H₁₈","الميثان CH₄","الإيثانول","البروبان"],correct:0,fact:"⛽ أرامكو طورت وقوداً أنظف بـ50%!"},
+  {category:"⛏️ الذهب",project:"⛏️ منجم مهد الذهب",region:"المدينة المنورة",level:"mining",q:"منجم مهد الذهب في المدينة المنورة يستخرج:",element:"Au",answers:["الذهب","الفضة","النحاس","الحديد"],correct:0,fact:"⛏️ مهد الذهب أقدم منجم في السعودية (3000 سنة)!"},
+  {category:"⛏️ الفوسفات",project:"⛏️ منجم وعد الشمال",region:"الحدود الشمالية",level:"mining",q:"الفوسفات يدخل في صناعة الأسمدة. رمز الفوسفور:",element:"P",answers:["P","Po","Ph","F"],correct:0,fact:"⛏️ وعد الشمال أكبر مشروع فوسفات في العالم!"},
+  {category:"⛏️ الألمنيوم",project:"⛏️ معادن الألمنيوم",region:"الشرقية",level:"mining",q:"السعودية تنتج الألمنيوم في مشروع:",element:"Al",answers:["رأس الخير","نيوم","القدية","البحر الأحمر"],correct:0,fact:"⛏️ رأس الخير: 1.8 مليون طن ألمنيوم سنوياً!"},
+  {category:"⛏️ التعدين",project:"⛏️ رؤية 2030 للتعدين",region:"الرياض",level:"mining",q:"الثروة المعدنية في السعودية تُقدّر بـ:",element:null,answers:["9.4 تريليون ريال","1 تريليون ريال","100 مليار ريال","500 مليار ريال"],correct:0,fact:"💰 التعدين الركيزة الثالثة للاقتصاد!"},
+  {category:"💧 التحلية",project:"💧 المؤسسة العامة لتحلية المياه",region:"مكة المكرمة",level:"water",q:"ما الملح الأساسي المزال من مياه البحر؟",element:"Na",answers:["كلوريد الصوديوم NaCl","كربونات الكالسيوم","كبريتات النحاس","نترات الفضة"],correct:0,fact:"💧 السعودية أكبر منتج للمياه المحلاة! 7.5 مليون م³ يومياً!"},
+  {category:"💧 الأملاح",project:"💧 مياه الشرب المحلاة",region:"مكة المكرمة",level:"water",q:"تضاف أملاح الكالسيوم والمغنيسيوم للمياه لأنها:",element:"Ca",answers:["مفيدة للصحة","للطعم فقط","للتلوين","للتبريد"],correct:0,fact:"💧 السعودية تنتج 5 ملايين م³ عبر 30 محطة!"},
+  {category:"💧 التناضح العكسي",project:"💧 تقنية التناضح العكسي",region:"الشرقية",level:"water",q:"التناضح العكسي يفصل الأملاح باستخدام:",element:null,answers:["أغشية نصف منفذة وضغط عالٍ","الحرارة","المجال المغناطيسي","التبريد"],correct:0,fact:"💧 رأس الخير أكبر محطة تحلية في العالم!"},
+  {category:"🚀 الفضاء",project:"🚀 الهيئة السعودية للفضاء",region:"الرياض",level:"space",q:"الأقمار الصناعية تعمل بالطاقة الشمسية المكونة من:",element:"Si",answers:["السيليكون","الحديد","النحاس","الألمنيوم"],correct:0,fact:"🚀 السعودية أطلقت 17 قمراً + ريانة برناوي!"},
+  {category:"🚀 الصواريخ",project:"🚀 صواريخ المستقبل",region:"الرياض",level:"space",q:"وقود الصواريخ يستخدم الهيدروجين السائل مع:",element:"O",answers:["الأكسجين السائل","النيتروجين","الهيليوم","النيون"],correct:0,fact:"🚀 السعودية تسعى لإطلاق صواريخ بالتعاون مع NASA!"},
+  {category:"🚀 الطيران",project:"🚀 صناعة الطيران",region:"الرياض",level:"space",q:"سبائك الطائرات تعتمد على معدن خفيف هو:",element:"Ti",answers:["التيتانيوم","الرصاص","الزئبق","الذهب"],correct:0,fact:"🚀 صناعة الطيران جزء من رؤية 2030!"},
+  {category:"🌱 الأخضر",project:"🌱 مبادرة السعودية الخضراء",region:"الرياض",level:"green",q:"في البناء الضوئي، تمتص الأشجار غاز:",element:"C",answers:["ثاني أكسيد الكربون CO₂","الأكسجين O₂","النيتروجين N₂","الهيليوم He"],correct:0,fact:"🌱 10 مليارات شجرة بحلول 2030!"},
+  {category:"🌱 الطاقة الشمسية",project:"🌱 سكاكا للطاقة الشمسية",region:"الجوف",level:"green",q:"محطة سكاكا للطاقة الشمسية تستخدم:",element:null,answers:["الخلايا الكهروضوئية","الفحم","النفط","الغاز"],correct:0,fact:"🌱 سكاكا 300 ميجاواط، تزوّد 45 ألف منزل!"},
+  {category:"🌱 إعادة التدوير",project:"♻️ اقتصاد دائري",region:"الرياض",level:"green",q:"المركب الأساسي في PET:",element:"C",answers:["بولي إيثيلين تيريفثاليت","بولي بروبيلين","بولي ستيرين","PVC"],correct:0,fact:"♻️ السعودية تستهدف إعادة تدوير 95% بحلول 2035!"},
+  {category:"🌱 الهيدروجين",project:"💚 الهيدروجين الأخضر",region:"تبوك",level:"green",q:"الهيدروجين الأخضر يُنتج من تحليل الماء باستخدام:",element:"H",answers:["كهرباء من طاقة متجددة","النفط","الفحم","الغاز"],correct:0,fact:"💚 السعودية أكبر مصدّر للهيدروجين الأخضر بحلول 2030!"}
+];
+
+// ═══════════════════════════════════════════════════════════
+// 🎮 STATE
+// ═══════════════════════════════════════════════════════════
+let currentQ=0,score=0,streak=0,playerName="",timer=null,timeLeft=15,quizQuestions=[];
+let playerRank=0,totalPlayers=0,mistakes=[],consecutive5=0,powersUsed=0;
+let powers={f5050:true,fTime:true,fHint:true,fFreeze:true},frozen=false,fastestTime=99;
+const playerClass="أول ثانوي";
+const TEACHER_NAME="أ. أشواق الخديدي";
+const PRINCIPAL_NAME="أ. جميلة الثبيتي";
+const TEACHER_PASSWORD="2030";
+
+// ═══════════════════════════════════════════════════════════
+// 🚀 START
+// ═══════════════════════════════════════════════════════════
+function startGame(){
+  const name=document.getElementById("playerName").value.trim();
+  if(!name){alert("⚠️ اكتبي اسمك أولاً!");return;}
+  playerName=name;
+  const level=document.getElementById("levelSelect").value;
+  currentQ=0;score=0;streak=0;mistakes=[];consecutive5=0;powersUsed=0;fastestTime=99;
+  powers={f5050:true,fTime:true,fHint:true,fFreeze:true};
+  
+  let pool=level==="all"?questions:questions.filter(function(q){return q.level===level;});
+  if(pool.length===0)pool=questions;
+  quizQuestions=pool.slice().sort(function(){return Math.random()-.5;}).slice(0,Math.min(8,pool.length));
+  
+  document.getElementById("startScreen").classList.add("hidden");
+  document.getElementById("gameScreen").classList.remove("hidden");
+  document.getElementById("currentPlayer").textContent=name;
+  document.getElementById("qTotal").textContent=quizQuestions.length;
+  loadQuestion();
+}
+
+function loadQuestion(){
+  if(currentQ>=quizQuestions.length){endGame();return;}
+  const q=quizQuestions[currentQ];
+  document.getElementById("qNum").textContent=currentQ+1;
+  document.getElementById("categoryTag").textContent=q.category;
+  document.getElementById("projectBadge").textContent=q.project;
+  document.getElementById("questionText").textContent=q.q;
+  document.getElementById("factBox").classList.add("hidden");
+  
+  const card=document.getElementById("elementCard");
+  if(q.element&&elementImages[q.element]){
+    card.innerHTML=elementImages[q.element]();
+    card.classList.remove("hidden");
+  }else{
+    card.classList.add("hidden");
+  }
+  
+  renderMap(q.project,q.region);
+  
+  const answersBox=document.getElementById("answersBox");
+  answersBox.innerHTML="";
+  const shuffled=q.answers.map(function(a,i){return {text:a,correct:i===q.correct};});
+  shuffled.sort(function(){return Math.random()-.5;});
+  shuffled.forEach(function(a){
+    const btn=document.createElement("button");
+    btn.className="answer-btn";
+    btn.textContent=a.text;
+    btn.dataset.correct=a.correct?"true":"false";
+    btn.onclick=function(){checkAnswer(btn,a.correct);};
+    answersBox.appendChild(btn);
+  });
+  
+  updateVisionProgress();
+  updatePowerupsUI();
+  startTimer();
+}
+
+function updateVisionProgress(){
+  const p=Math.round((currentQ/quizQuestions.length)*100);
+  document.getElementById("visionText").textContent=p+"%";
+  document.getElementById("visionFill").style.width=p+"%";
+}
+
+function updatePowerupsUI(){
+  const unlocked=streak>=3;
+  const ids=["pu5050","puTime","puHint","puFreeze"];
+  const used=[!powers.f5050,!powers.fTime,!powers.fHint,!powers.fFreeze];
+  ids.forEach(function(id,i){
+    const el=document.getElementById(id);
+    if(!el)return;
+    if(!unlocked||used[i])el.classList.add("disabled");
+    else el.classList.remove("disabled");
+  });
+}
+
+function startTimer(){
+  timeLeft=15;frozen=false;
+  const fill=document.getElementById("timerFill");
+  fill.style.width="100%";
+  fill.classList.remove("warning","frozen");
+  clearInterval(timer);
+  timer=setInterval(function(){
+    if(frozen)return;
+    timeLeft--;
+    fill.style.width=(timeLeft/15*100)+"%";
+    if(timeLeft<=5&&timeLeft>0){fill.classList.add("warning");playTick();}
+    if(timeLeft<=0){
+      clearInterval(timer);
+      disableAnswers();
+      streak=0;consecutive5=0;
+      updateStreak();
+      playWrong();
+      const q=quizQuestions[currentQ];
+      if(q&&!mistakes.find(function(m){return m.q===q.q;}))mistakes.push(q);
+      showFact();
+      setTimeout(function(){currentQ++;loadQuestion();},2500);
+    }
+  },1000);
+}
+
+function disableAnswers(){
+  document.querySelectorAll(".answer-btn").forEach(function(b){b.disabled=true;});
+}
+
+function checkAnswer(btn,isCorrect){
+  clearInterval(timer);
+  disableAnswers();
+  const timeUsed=15-timeLeft;
+  if(timeUsed<fastestTime&&isCorrect)fastestTime=timeUsed;
+  
+  if(isCorrect){
+    btn.classList.add("correct");
+    streak++;consecutive5++;
+    const bonus=timeLeft;
+    const streakBonus=streak>=3?10:0;
+    score+=10+bonus+streakBonus;
+    document.getElementById("score").textContent=score;
+    updateStreak();
+    playCorrect();
+    createBubbles(5);
+    if(timeUsed<3){if(saveBadge("falcon"))showToast("🚀 شارة جديدة: سريعة كالصقر!");}
+    if(consecutive5>=5){if(saveBadge("fire"))showToast("🔥 شارة جديدة: سلسلة نارية!");}
+    if(score>=200){if(saveBadge("chemist"))showToast("🧪 شارة جديدة: كيميائية متميزة!");}
+  }else{
+    btn.classList.add("wrong");
+    streak=0;consecutive5=0;
+    updateStreak();
+    playWrong();
+    const cq=quizQuestions[currentQ];
+    if(cq&&!mistakes.find(function(m){return m.q===cq.q;}))mistakes.push(cq);
+    document.querySelectorAll(".answer-btn").forEach(function(b){
+      if(b.dataset.correct==="true")b.classList.add("correct");
+    });
+  }
+  
+  const q=quizQuestions[currentQ];
+  if(q&&q.region)addVisitedRegion(q.region);
+  if(getVisitedRegions().length>=13){if(saveBadge("geo"))showToast("🗺️ شارة جديدة: خبيرة الجغرافيا!");}
+  
+  showFact();
+  setTimeout(function(){currentQ++;loadQuestion();},2500);
+}
+
+function showFact(){
+  const q=quizQuestions[currentQ];
+  if(!q)return;
+  const fb=document.getElementById("factBox");
+  if(q.fact){
+    fb.innerHTML="<b>"+q.project+" - معلومة وطنية</b>"+q.fact;
+    fb.classList.remove("hidden");
+  }
+}
+
+function updateStreak(){
+  document.getElementById("streakDisplay").textContent=streak>=3?"🔥×"+streak:"";
+  updatePowerupsUI();
+}
+
+function showToast(msg){
+  const t=document.createElement("div");
+  t.className="toast";t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(function(){t.remove();},2500);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ⚡ POWERUPS
+// ═══════════════════════════════════════════════════════════
+function use5050(){
+  if(streak<3||!powers.f5050)return;
+  const wrong=[].slice.call(document.querySelectorAll(".answer-btn")).filter(function(b){return b.dataset.correct!=="true"&&!b.classList.contains("removed");});
+  wrong.slice(0,2).forEach(function(b){b.classList.add("removed");});
+  powers.f5050=false;powersUsed++;
+  updatePowerupsUI();
+  playTick();
+}
+
+function useTime(){
+  if(streak<3||!powers.fTime)return;
+  timeLeft=Math.min(timeLeft+10,25);
+  document.getElementById("timerFill").style.width=(timeLeft/15*100)+"%";
+  powers.fTime=false;powersUsed++;
+  updatePowerupsUI();
+  playCorrect();
+}
+
+function useHint(){
+  if(streak<3||!powers.fHint)return;
+  const q=quizQuestions[currentQ];
+  const fb=document.getElementById("factBox");
+  fb.innerHTML="<b>💡 تلميح</b>"+(q.fact||"ركزي على المشروع الوطني المرتبط بالسؤال");
+  fb.classList.remove("hidden");
+  powers.fHint=false;powersUsed++;
+  updatePowerupsUI();
+  playTick();
+}
+
+function useFreeze(){
+  if(streak<3||!powers.fFreeze)return;
+  frozen=true;
+  document.getElementById("timerFill").classList.add("frozen");
+  setTimeout(function(){frozen=false;document.getElementById("timerFill").classList.remove("frozen");},10000);
+  powers.fFreeze=false;powersUsed++;
+  updatePowerupsUI();
+  playTick();
+}
+
+// ═══════════════════════════════════════════════════════════
+// 🏁 END GAME
+// ═══════════════════════════════════════════════════════════
+async function endGame(){
+  document.getElementById("gameScreen").classList.add("hidden");
+  document.getElementById("endScreen").classList.remove("hidden");
+  document.getElementById("finalName").textContent=playerName;
+  document.getElementById("finalScore").textContent=score;
+  playExplosion();
+  createBubbles(30);
+  
+  if(mistakes.length===0){if(saveBadge("diamond"))showToast("💎 شارة جديدة: ماسة الكيمياء!");}
+  const cats={};
+  quizQuestions.forEach(function(q){cats[q.category.split("|")[0].trim()]=1;});
+  if(Object.keys(cats).length>=3){if(saveBadge("vision"))showToast("🌟 شارة جديدة: سفيرة رؤية 2030!");}
+  incPlayCount();
+  if(getPlayCount()>=3){if(saveBadge("pride"))showToast("🇸🇦 شارة جديدة: فخر الوطن!");}
+  
+  await saveScore(playerName,score,playerClass);
+  const allScores=await loadScores();
+  totalPlayers=allScores.length;
+  const myIndex=allScores.findIndex(function(s){return s.name===playerName&&s.score===score;});
+  playerRank=myIndex>=0?myIndex+1:totalPlayers;
+  
+  document.getElementById("finalRank").textContent=getMedal(playerRank)+" المرتبة "+playerRank;
+  document.getElementById("totalPlayers").textContent=totalPlayers;
+  document.getElementById("regionsVisited").textContent=getVisitedRegions().length+"/13";
+  document.getElementById("powersUsed").textContent=powersUsed;
+  
+  renderBadgesGrid("earnedBadgesGrid",true);
+  
+  const msg=document.getElementById("rankMsg");
+  const maxP=quizQuestions.length*35;
+  const pct=(score/maxP)*100;
+  if(pct>=80)msg.textContent="🌟 ما شاء الله! سفيرة رؤية 2030!";
+  else if(pct>=60)msg.textContent="💚 ممتازة! فخر الوطن!";
+  else if(pct>=40)msg.textContent="👍 جيدة! واصلي العطاء!";
+  else msg.textContent="💪 أعيدي المحاولة يا بطلة!";
+}
+
+function getMedal(r){return r===1?"🥇":r===2?"🥈":r===3?"🥉":"🏅";}
+
+// ═══════════════════════════════════════════════════════════
+// 📖 REVIEW
+// ═══════════════════════════════════════════════════════════
+function showReview(){
+  document.getElementById("endScreen").classList.add("hidden");
+  document.getElementById("reviewScreen").classList.remove("hidden");
+  const list=document.getElementById("reviewList");
+  if(mistakes.length===0){
+    list.innerHTML="<p style='text-align:center;color:#006C35;font-weight:900;padding:20px;'>🎉 ما شاء الله! لم تخطئي في أي سؤال!</p>";
+    return;
+  }
+  list.innerHTML=mistakes.map(function(m,i){
+    return '<div class="review-item"><div class="rq">'+(i+1)+'. '+m.q+'</div><div class="rc">✅ الإجابة الصحيحة: '+m.answers[m.correct]+'</div><div style="font-size:12px;color:#666;margin-top:6px;background:#f0f8f3;padding:8px;border-radius:8px;">💡 '+(m.fact||"")+'</div></div>';
+  }).join("");
+}
+
+// ═══════════════════════════════════════════════════════════
+// 💾 SAVE/LOAD
+// ═══════════════════════════════════════════════════════════
+async function saveScore(name,sc,cls){
+  try{
+    const entry={name:name,score:sc,class:cls||"أول ثانوي",date:new Date().toLocaleDateString("ar-SA"),timestamp:Date.now(),badges:getBadges().length,regions:getVisitedRegions().length};
+    let local=JSON.parse(localStorage.getItem("saudiFinalScores")||"[]");
+    local.push(entry);
+    local.sort(function(a,b){return b.score-a.score;});
+    local=local.slice(0,50);
+    localStorage.setItem("saudiFinalScores",JSON.stringify(local));
+  }catch(e){}
+}
+
+async function loadScores(){
+  try{
+    const local=JSON.parse(localStorage.getItem("saudiFinalScores")||"[]");
+    return local.slice(0,20);
+  }catch(e){return [];}
+}
+
+async function showLeaderboard(){
+  document.getElementById("startScreen").classList.add("hidden");
+  document.getElementById("endScreen").classList.add("hidden");
+  document.getElementById("leaderboardScreen").classList.remove("hidden");
+  const list=document.getElementById("leaderboardList");
+  list.innerHTML='<p style="text-align:center;">⏳ جاري التحميل<span class="loading"></span></p>';
+  const scores=await loadScores();
+  list.innerHTML="";
+  if(scores.length===0){list.innerHTML="<p style='text-align:center;'>لا توجد نتائج بعد 🌱</p>";return;}
+  const medals=["🥇","🥈","🥉"];
+  scores.forEach(function(s,i){
+    const div=document.createElement("div");
+    div.className="player-row"+(i<3?" rank-"+(i+1):"");
+    div.innerHTML='<span>'+(medals[i]||(i+1)+".")+' '+s.name+' <small style="color:#777;">(🎖️'+(s.badges||0)+' 🗺️'+(s.regions||0)+')</small></span><span>'+s.score+' نقطة</span>';
+    list.appendChild(div);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// 🫧 BUBBLES
+// ═══════════════════════════════════════════════════════════
+function createBubbles(count){
+  const c=document.getElementById("bubbles");
+  for(let i=0;i<count;i++){
+    const b=document.createElement("div");
+    b.className="bubble";
+    const s=Math.random()*40+20;
+    b.style.width=s+"px";b.style.height=s+"px";
+    b.style.left=Math.random()*100+"%";b.style.bottom="0";
+    b.style.animationDuration=(Math.random()*2+2)+"s";
+    c.appendChild(b);
+    setTimeout(function(){b.remove();},4000);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// 📜 CERTIFICATE
+// ═══════════════════════════════════════════════════════════
+function showCertificate(){
+  const today=new Date().toLocaleDateString("ar-SA",{year:"numeric",month:"long",day:"numeric"});
+  const badgesCount=getBadges().length;
+  const regionsCount=getVisitedRegions().length;
+  const html='<div class="cert-preview" id="certPreview"><div class="cert-wrapper"><div id="certificate"><div class="cert-header-flag">🇸🇦</div><div class="cert-title">شهادة تقدير وطنية</div><div class="cert-subtitle">بمناسبة اليوم الوطني للمملكة العربية السعودية</div><div class="cert-body">تُمنح بكل فخر إلى<div class="cert-name">'+playerName+'</div>من <b>'+playerClass+'</b> تقديراً لأدائها المتميز في لعبة<br><b>🧪 عزنا بطبعنا | كيميائية اليوم الوطني 🇸🇦</b><br>وإثباتها معرفة علمية متميزة في الكيمياء وربطها بالمشاريع الوطنية</div><div class="cert-medal">'+getMedal(playerRank)+'</div><div class="cert-rank">المرتبة '+playerRank+' '+getMedal(playerRank)+'</div><div class="cert-score">⭐ النقاط: '+score+' نقطة</div><div style="font-size:13px;color:#666;margin:8px 0;">🎖️ '+badgesCount+'/7 شارات | 🗺️ '+regionsCount+'/13 منطقة</div><div class="cert-footer"><div class="cert-signature"><div class="line"></div><b>معلمة المادة</b><br>'+TEACHER_NAME+'</div><div class="cert-stamp">رؤية<br>2030<br>🇸🇦</div><div class="cert-signature"><div class="line"></div><b>مديرة المدرسة</b><br>'+PRINCIPAL_NAME+'</div></div><div class="cert-date">📅 '+today+'</div></div><div class="cert-buttons"><button onclick="downloadPDF()" class="btn-gold">⬇️ PDF</button><button onclick="downloadPNG()" class="btn-blue">🖼️ صورة</button><button onclick="closeCertificate()" class="btn-red">❌ إغلاق</button></div></div></div>';
+  const div=document.createElement("div");
+  div.innerHTML=html;
+  document.body.appendChild(div.firstElementChild);
+}
+
+function closeCertificate(){
+  const p=document.getElementById("certPreview");
+  if(p)p.remove();
+}
+
+async function downloadPDF(){
+  const cert=document.getElementById("certificate");
+  const jsPDF=window.jspdf.jsPDF;
+  try{
+    const btn=event.target;
+    const orig=btn.textContent;
+    btn.textContent="⏳...";
+    btn.disabled=true;
+    const canvas=await html2canvas(cert,{scale:2,backgroundColor:"#fff",useCORS:true});
+    const img=canvas.toDataURL("image/png");
+    const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+    const pw=pdf.internal.pageSize.getWidth();
+    const ph=pdf.internal.pageSize.getHeight();
+    const iw=pw-20;
+    const ih=(canvas.height*iw)/canvas.width;
+    pdf.addImage(img,"PNG",10,Math.max(10,(ph-ih)/2),iw,Math.min(ih,ph-20));
+    pdf.save("شهادة_"+playerName+".pdf");
+    btn.textContent="✅ تم!";
+    setTimeout(function(){btn.textContent=orig;btn.disabled=false;},2000);
+  }catch(e){console.error(e);alert("خطأ في التحميل");if(event)event.target.disabled=false;}
+}
+
+async function downloadPNG(){
+  const cert=document.getElementById("certificate");
+  try{
+    const btn=event.target;
+    const orig=btn.textContent;
+    btn.textContent="⏳...";
+    btn.disabled=true;
+    const canvas=await html2canvas(cert,{scale:2,backgroundColor:"#fff",useCORS:true});
+    const link=document.createElement("a");
+    link.download="شهادة_"+playerName+".png";
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+    btn.textContent="✅ تم!";
+    setTimeout(function(){btn.textContent=orig;btn.disabled=false;},2000);
+  }catch(e){console.error(e);alert("خطأ في التحميل");if(event)event.target.disabled=false;}
+}
+
+// ═══════════════════════════════════════════════════════════
+// 📤 SHARE
+// ═══════════════════════════════════════════════════════════
+async function shareAchievement(){
+  const shareHTML='<div id="shareCard" style="width:600px;padding:30px;background:linear-gradient(135deg,#0a3d1f,#006C35);color:#fff;font-family:Cairo,sans-serif;text-align:center;direction:rtl;border-radius:20px;"><div style="font-size:60px;margin-bottom:10px;">🇸🇦</div><div style="font-size:32px;font-weight:900;color:#ffd700;margin-bottom:15px;">عزنا بطبعنا</div><div style="font-size:15px;margin-bottom:20px;opacity:.9;">اليوم الوطني للمملكة العربية السعودية</div><div style="background:rgba(255,215,0,.15);border:2px solid #ffd700;border-radius:15px;padding:20px;margin:15px 0;"><div style="font-size:13px;color:#ffd700;margin-bottom:8px;">أنجزت اللعبة الوطنية</div><div style="font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">'+playerName+'</div><div style="font-size:18px;color:#ffd700;">⭐ '+score+' نقطة</div><div style="font-size:16px;color:#fff;margin-top:8px;">'+getMedal(playerRank)+' المرتبة '+playerRank+'</div><div style="font-size:13px;margin-top:8px;">🎖️ '+getBadges().length+'/7 | 🗺️ '+getVisitedRegions().length+'/13</div></div><div style="font-size:12px;opacity:.8;margin-top:15px;">من إعداد: '+TEACHER_NAME+' | '+PRINCIPAL_NAME+'</div></div>';
+  const div=document.createElement("div");
+  div.style.position="fixed";
+  div.style.left="-9999px";
+  div.innerHTML=shareHTML;
+  document.body.appendChild(div);
+  try{
+    const canvas=await html2canvas(div.firstElementChild,{scale:2,backgroundColor:"#0a3d1f"});
+    const link=document.createElement("a");
+    link.download="إنجاز_"+playerName+".png";
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+    showToast("📤 تم تحميل صورة الإنجاز!");
+  }catch(e){alert("حدث خطأ");}
+  div.remove();
+}
+
+// ═══════════════════════════════════════════════════════════
+// 👩‍🏫 TEACHER
+// ═══════════════════════════════════════════════════════════
+function showTeacherLogin(){
+  const pw=prompt("🔐 أدخلي كلمة سر المعلمة:");
+  if(pw===TEACHER_PASSWORD)showTeacherDashboard();
+  else if(pw!==null)alert("❌ كلمة السر غير صحيحة");
+}
+
+async function showTeacherDashboard(){
+  const scores=await loadScores();
+  const total=scores.length;
+  const avg=total?Math.round(scores.reduce(function(a,b){return a+b.score;},0)/total):0;
+  const top=scores[0];
+  const totalBadges=scores.reduce(function(a,b){return a+(b.badges||0);},0);
+  const maxScore=scores.length?Math.max.apply(null,scores.map(function(x){return x.score;})):1;
+  
+  const modal=document.createElement("div");
+  modal.className="modal";
+  modal.id="teacherModal";
+  modal.innerHTML='<div class="modal-content"><h2>👩‍🏫 لوحة تحكم المعلمة</h2><p style="font-size:12px;color:#777;margin-bottom:15px;">مرحباً '+TEACHER_NAME+'</p><div class="stat-row"><span>👥 عدد الطالبات:</span><span><b>'+total+'</b></span></div><div class="stat-row"><span>📊 متوسط النقاط:</span><span><b>'+avg+'</b></span></div><div class="stat-row"><span>🏆 الأعلى:</span><span><b>'+(top?top.name+" ("+top.score+")":"-")+'</b></span></div><div class="stat-row"><span>🎖️ إجمالي الشارات:</span><span><b>'+totalBadges+'</b></span></div><h3 style="color:#006C35;font-size:15px;margin:18px 0 10px;">📊 توزيع النقاط</h3><div style="text-align:right;">'+scores.slice(0,10).map(function(s){return '<div style="margin-bottom:6px;font-size:12px;"><div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span>'+s.name+'</span><span><b>'+s.score+'</b></span></div><div class="chart-bar" style="width:'+((s.score/maxScore)*100)+'%"></div></div>';}).join("")+'</div><button class="btn-blue" onclick="exportCSV()" style="margin-top:15px;">📥 تصدير Excel (CSV)</button><button class="btn-red" onclick="closeTeacher()">🔒 إغلاق</button></div>';
+  document.body.appendChild(modal);
+}
+
+function closeTeacher(){
+  const m=document.getElementById("teacherModal");
+  if(m)m.remove();
+}
+
+function exportCSV(){
+  try{
+    const scores=JSON.parse(localStorage.getItem("saudiFinalScores")||"[]");
+    if(scores.length===0){alert("لا توجد بيانات");return;}
+    let csv="\uFEFF";
+    csv+="الاسم,الصف,النقاط,التاريخ,الشارات,المناطق\n";
+    scores.forEach(function(s){
+      csv+='"'+s.name+'","'+(s.class||"")+'",'+s.score+',"'+s.date+'",'+(s.badges||0)+','+(s.regions||0)+'\n';
+    });
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+    const link=document.createElement("a");
+    link.href=URL.createObjectURL(blob);
+    link.download="نتائج_اليوم_الوطني_"+new Date().toISOString().split("T")[0]+".csv";
+    link.click();
+    showToast("📥 تم تصدير الملف!");
+  }catch(e){alert("خطأ في التصدير");}
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+document.body.addEventListener("click",function initOnce(){initAudio();document.body.removeEventListener("click",initOnce);},{once:true});
+renderRegionsBar("");
+</script>
+</body>
+</html>
